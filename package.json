@@ -1,0 +1,25 @@
+{
+  "name": "breakoutjs",
+  "version": "1.0.0",
+  "description": "Making Breakout in JavaScript. Making this to strengthen my understanding on JS",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanlsmith4/breakoutgame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanlsmith4/breakoutgame/issues"
+  },
+  "homepage": "https://github.com/ryanlsmith4/breakoutgame#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.15.0"
+  }
+}

@@ -30,6 +30,9 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
+// Color Array
+const colors = ['red', 'green', 'brown', 'orange', 'cadetblue'];
+
 // Logic to create bricks
 const bricks = [];
 for (let c = 0; c < brickColumnCount; c += 1) {
@@ -44,7 +47,7 @@ for (let c = 0; c < brickColumnCount; c += 1) {
 }
 
 
-// These ES6 functions don't work this event listener... Wondering why?
+// These ES6 functions don't get hoisted. Must put them before the event listene
 // =============================================================================
 const keyDownHandler = (e) => {
   if (e.key === 'Right' || e.key === 'ArrowRight') {
@@ -88,6 +91,7 @@ const collisionDetection = () => {
           score += 1;
           if (score === brickRowCount * brickColumnCount) {
             alert('YOU WIN CONGRATULATIONS');
+            gameRun = false;
             document.location.reload();
           }
         }
@@ -112,6 +116,11 @@ const drawPaddle = () => {
   ctx.closePath();
 };
 
+let counter = 0;
+const COUNTER_LIMIT = 180;
+const amountOfColors = colors.length;
+let currentColor = 0;
+
 const drawBricks = () => {
   for (let c = 0; c < brickColumnCount; c += 1) {
     for (let r = 0; r < brickRowCount; r += 1) {
@@ -121,11 +130,22 @@ const drawBricks = () => {
         bricks[c][r].x = brickX;
         bricks[c][r].y = brickY;
         ctx.beginPath();
+        if (counter >= COUNTER_LIMIT) {
+          if (currentColor === amountOfColors - 1) {
+            currentColor = 0;
+          } else {
+            currentColor += 1;
+          }
+          counter = 0;
+        }
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = '#0095DD';
+        ctx.fillStyle = colors[currentColor];
+
         ctx.fill();
         ctx.closePath();
+
       }
+      counter += 1;
     }
   }
 };

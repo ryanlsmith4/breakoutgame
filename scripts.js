@@ -30,8 +30,17 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
-// Color Array
+// Color Array for bricks
 const colors = ['red', 'green', 'brown', 'orange', 'cadetblue'];
+
+// Color Array for paddle
+const padColors = ['blue', 'black', 'silver', 'lime', 'yellow'];
+
+// Color variables
+let counter = 0;
+const COUNTER_LIMIT = 180;
+const amountOfColors = colors.length;
+let currentColor = 0;
 
 // Logic to create bricks
 const bricks = [];
@@ -111,15 +120,21 @@ const drawBall = () => {
 const drawPaddle = () => {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = '0095DD';
+  if (counter >= COUNTER_LIMIT) {
+    if (currentColor === amountOfColors - 1) {
+      currentColor = 0;
+    } else {
+      currentColor += 1;
+    }
+    counter = 0;
+  }
+  ctx.fillStyle = padColors[currentColor];
+
   ctx.fill();
   ctx.closePath();
 };
 
-let counter = 0;
-const COUNTER_LIMIT = 180;
-const amountOfColors = colors.length;
-let currentColor = 0;
+
 
 const drawBricks = () => {
   for (let c = 0; c < brickColumnCount; c += 1) {

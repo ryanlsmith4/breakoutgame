@@ -1,8 +1,148 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-alert */
 // Define canvas and get the context
+
+// Ball class
+// Paddle class
+// Brick class
+// score
+// lives
+// game
+class Game {
+  constructor() {
+    this.canvas = document.getElementById('canvas')
+    this.ball = new Ball(this.canvas.width/2, this.canvas.height - 30);
+
+  }
+}
+
+
+class Ball {
+  constructor(x, y, radius = 10) {
+    this.x = x;
+    this.y = y;
+    this.dx = 2;
+    this.yd = -2;
+    this.radius = radius;
+  }
+
+  move() {
+    this.x += this.dx;
+    this.y += this.dy;
+  }
+
+  render(ctx) {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#0095DD';
+    ctx.fill();
+    ctx.closePath();
+  }
+}
+
+class Paddle {
+  constructor(x, y, Height = 10, Width = 75, color = red) {
+    this.x = x;
+    this.y = y;
+    this.Height = Height;
+    this.Width = Width;
+    this.color = color;
+  }
+
+  render(ctx) {
+    ctx.beginPath();
+    ctx.rect(this.x, game.canvas.height - this.height, this.width, this.height);
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  moveLeft() {
+    this.x - 7;
+  }
+
+  moveRight() {
+    this.x + 7;
+  }
+}
+
+//WORK IN PROGRESS
+class Brick {
+  constructor() {
+    this.x = 0;
+    this.y = 0;
+    this.status = 1;
+  }
+}
+
+class Score {
+  constructor(color = 'Blue', font = '16px Arial') {
+    this.x = 8;
+    this.y = 20;
+    this.color = color;
+    this.font = font;
+    this.score = 0;
+  }
+
+  render(ctx) {
+    ctx.font = this.font
+    ctx.fillStyle = this.color;
+    ctx.fillText(`Score: ${this.score}`, this.x, this.y)
+  }
+
+  update(points) {
+    this.score += points
+  }
+
+  reset() {
+    this.score = 0;
+  }
+}
+
+class Lives {
+  constructor(color = 'Red', lives = 3, font = '16px Arial') {
+    this.x = game.width - 65;
+    this.y = 20;
+    this.color = color;
+    this.lives = lives;
+    this.font = font;
+  }
+
+  render(ctx) {
+    ctx.font = this.font;
+    ctx.fillStyle = this.color;
+    ctx.fillText(`Lives: ${this.lives}`, this.x, this.y);
+  }
+
+  loseLife() {
+    this.life - 1;
+  }
+
+  reset() {
+    this.life = lives;
+  }
+}
+
+class Background {
+  this.background = document.getElementById('back')
+  this.
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+
+const ball = new Ball(canvas.width/2, canvas.height - 30)
 
 let score = 0;
 let lives = 3;
@@ -100,7 +240,6 @@ const collisionDetection = () => {
           score += 1;
           if (score === brickRowCount * brickColumnCount) {
             alert('YOU WIN CONGRATULATIONS');
-            gameRun = false;
             document.location.reload();
           }
         }
@@ -110,11 +249,7 @@ const collisionDetection = () => {
 };
 
 const drawBall = () => {
-  ctx.beginPath();
-  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = '#0095DD';
-  ctx.fill();
-  ctx.closePath();
+  ball.render(ctx)
 };
 
 const drawPaddle = () => {
@@ -133,7 +268,6 @@ const drawPaddle = () => {
   ctx.fill();
   ctx.closePath();
 };
-
 
 
 const drawBricks = () => {
@@ -186,8 +320,8 @@ const draw = () => {
   drawScore();
   drawLives();
 
-  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-    dx = -dx;
+  if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
+    ball.dx = -ball.dx;
   }
 
   if (y + dy < ballRadius) {
